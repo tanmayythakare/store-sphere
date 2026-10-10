@@ -27,3 +27,14 @@ export interface ChangePasswordDto {
   currentPassword: string;
   newPassword: string;
 }
+
+export interface RateStoreDto {
+  score: number;
+  comment?: string;
+}
+
+export interface StoreQueryDto {
+  search?: string;
+  sortBy?: 'name' | 'address' | 'rating';
+  order?: 'asc' | 'desc';
+}

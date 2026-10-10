@@ -22,6 +22,22 @@ export function authenticateToken(req: AuthenticatedRequest, res: Response, next
   }
 }
 
+export function optionalAuthenticateToken(req: AuthenticatedRequest, _res: Response, next: NextFunction) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : null;
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+      req.user = decoded;
+    } catch {
+      // Ignored: continue as anonymous
+    }
+  }
+
+  next();
+}
+
 export function requireRole(...roles: Role[]) {
   return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     if (!req.user) {
