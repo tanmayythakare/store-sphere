@@ -9,7 +9,7 @@
     "db:migrate": "dotenv -e .env -- prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
     "db:generate": "prisma generate",
-    "test": "echo \"Tests pending Commit 6\""
+    "test": "dotenv -e .env -- jest --runInBand --forceExit"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -30,11 +30,16 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.6.5",
+    "@types/supertest": "^7.2.1",
     "dotenv-cli": "^11.0.0",
+    "jest": "^30.5.2",
     "prisma": "^6.4.1",
+    "supertest": "^7.3.1",
+    "ts-jest": "^29.4.14",
     "tsx": "^4.23.15",
-    "typescript": "^7.0.2"
+    "typescript": "^5.7.3"
   }
 }
