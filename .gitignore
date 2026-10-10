@@ -1,6 +1,10 @@
 # Strictly Local Tooling (NEVER push to GitHub)
 .agents/
+.agent/
 .gemini/
+.claude/
+.windsurf/
+skills-lock.json
 *.log
 
 # Dependencies
@@ -10,7 +14,10 @@ package-lock.json
 # Environment variables & secrets
 .env
 .env.local
+.env.development
+.env.test
 .env.production
+!.env.example
 
 # Build outputs
 dist/
