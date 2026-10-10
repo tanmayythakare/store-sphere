@@ -38,3 +38,18 @@ export interface StoreQueryDto {
   sortBy?: 'name' | 'address' | 'rating';
   order?: 'asc' | 'desc';
 }
+
+export interface CreateUserAdminDto {
+  name: string;
+  email: string;
+  password: string;
+  address: string;
+  role: Role;
+}
+
+export interface CreateStoreDto {
+  name: string;
+  email: string;
+  address: string;
+  ownerId?: number | null;
+}
