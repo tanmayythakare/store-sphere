@@ -38,7 +38,7 @@ const clientDistPath = candidatePaths.find((p) => fs.existsSync(p));
 
 if (clientDistPath) {
   app.use(express.static(clientDistPath));
-  app.get('*', (req: Request, res: Response, next: NextFunction) => {
+  app.use((req: Request, res: Response, next: NextFunction) => {
     if (req.path.startsWith('/api')) {
       return next();
     }
