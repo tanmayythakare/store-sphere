@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ override: true });
 
 import { PrismaClient, Role } from '@prisma/client';
 import bcrypt from 'bcryptjs';
