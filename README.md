@@ -25,7 +25,6 @@
 
 <p align="center">
   🌐 <strong>Live Production Domain:</strong> <a href="https://storesphere.tanmayythakare.online"><strong>https://storesphere.tanmayythakare.online</strong></a><br>
-  ⚡ <strong>CloudFront CDN Endpoint:</strong> <a href="https://d115c1ev3w1apg.cloudfront.net"><code>https://d115c1ev3w1apg.cloudfront.net</code></a><br>
   🩺 <strong>API Health Endpoint:</strong> <a href="https://storesphere.tanmayythakare.online/api/health"><code>https://storesphere.tanmayythakare.online/api/health</code></a>
 </p>
 
