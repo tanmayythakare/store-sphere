@@ -5,14 +5,16 @@
 **Commercial Store Directory & Rating Management Engine**
 
 <p align="center">
+  <a href="https://github.com/tanmayythakare/store-sphere/actions/workflows/ci.yml"><img src="https://github.com/tanmayythakare/store-sphere/actions/workflows/ci.yml/badge.svg" alt="CI Status"></a>
+  <a href="https://github.com/tanmayythakare/store-sphere/actions/workflows/cd.yml"><img src="https://github.com/tanmayythakare/store-sphere/actions/workflows/cd.yml/badge.svg" alt="CD Status"></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.4-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript 5.4"></a>
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-18.3-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React 18.3"></a>
   <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-20.x-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node.js 20"></a>
-  <a href="https://expressjs.com/"><img src="https://img.shields.io/badge/Express-4.19-000000?style=flat-square&logo=express&logoColor=white" alt="Express 4.19"></a>
+  <a href="https://expressjs.com/"><img src="https://img.shields.io/badge/Express-5.3-000000?style=flat-square&logo=express&logoColor=white" alt="Express 5.3"></a>
   <a href="https://www.postgresql.org/"><img src="https://img.shields.io/badge/PostgreSQL-16-blue?style=flat-square&logo=postgresql" alt="PostgreSQL 16"></a>
   <a href="https://www.prisma.io/"><img src="https://img.shields.io/badge/Prisma-6.4.1-2D3748?style=flat-square&logo=prisma&logoColor=white" alt="Prisma 6.4.1"></a>
   <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS"></a>
-  <a href="https://jestjs.io/"><img src="https://img.shields.io/badge/Jest-29.7-C21325?style=flat-square&logo=jest&logoColor=white" alt="Jest 29.7"></a>
+  <a href="https://jestjs.io/"><img src="https://img.shields.io/badge/Tests-25%20Passed-brightgreen?style=flat-square&logo=jest&logoColor=white" alt="Tests 25 Passed"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License"></a>
 </p>
 
@@ -22,9 +24,15 @@
 </p>
 
 <p align="center">
+  🌐 <strong>Live Production Application:</strong> <a href="https://d115c1ev3w1apg.cloudfront.net"><strong>https://d115c1ev3w1apg.cloudfront.net</strong></a><br>
+  ⚡ <strong>API Health Endpoint:</strong> <a href="https://d115c1ev3w1apg.cloudfront.net/api/health"><code>https://d115c1ev3w1apg.cloudfront.net/api/health</code></a>
+</p>
+
+<p align="center">
   <a href="#quick-flow">Quick Flow</a> •
   <a href="#visual-showcase">Visual Showcase</a> •
   <a href="#system-architecture">Architecture</a> •
+  <a href="#ci-cd--deployment-pipeline">CI/CD Pipeline</a> •
   <a href="#core-features">Features</a> •
   <a href="#demo-credentials">Credentials</a> •
   <a href="#getting-started">Setup</a> •
@@ -63,17 +71,76 @@ Register / Sign In  →  Role-Based Routing  →  Store Catalog & Search  →  1
 
 ## System Architecture
 
+StoreSphere employs a secure hybrid cloud architecture deployed on AWS with unified HTTPS delivery via CloudFront:
+
+```mermaid
+flowchart TD
+    User([End User / Browser])
+
+    subgraph CDN["AWS CloudFront Global CDN (d115c1ev3w1apg.cloudfront.net)"]
+        CF[CloudFront Distribution]
+    end
+
+    subgraph Frontend["Static Hosting"]
+        S3[(AWS S3 Bucket: store-sphere<br/>React 18 SPA Build)]
+    end
+
+    subgraph Backend["AWS EC2 Host (Ubuntu 24.04 LTS)"]
+        subgraph DockerNet["Docker Compose Internal Bridge Network"]
+            App["StoreSphere API Container<br/>Express 5 + Prisma ORM<br/>Port 5000"]
+            DB[("PostgreSQL 16 Alpine<br/>Port 5432 - Private Network")]
+        end
+    end
+
+    User -->|HTTPS| CF
+    CF -->|Route: /*| S3
+    CF -->|Route: /api/*| App
+    App -->|Prisma Client| DB
+```
+
+* **Zero Mixed Content & Zero CORS Issues:** CloudFront routes both static frontend assets (`/*`) and API requests (`/api/*`) through a single domain under unified TLS/SSL.
+* **Isolated Database Network:** PostgreSQL port `5432` is strictly internal to Docker's private bridge network, with zero exposure to the public internet.
+
+---
+
+## CI/CD & Deployment Pipeline
+
+The repository features enterprise-grade automated CI/CD using **AWS OIDC**, **GitHub Container Registry (GHCR)**, and **AWS Systems Manager (SSM)**:
+
 ```mermaid
 flowchart LR
-    Client["React 18 SPA<br/>Tailwind CSS :3000"]
-    Server["Express REST API<br/>TypeScript :5000"]
-    Prisma["Prisma ORM 6.4<br/>Validation & RBAC"]
-    DB[("PostgreSQL 16 Database<br/>Port 5432")]
+    subgraph GitHub["GitHub Actions CI/CD"]
+        GHA[Workflow Runner]
+        GHCR[(GHCR Registry)]
+    end
 
-    Client -->|HTTP / JWT Bearer| Server
-    Server --> Prisma
-    Prisma -->|Composite Key Upsert| DB
+    subgraph AWS["AWS Cloud Infrastructure"]
+        OIDC[IAM OIDC Provider]
+        S3[(AWS S3)]
+        CF[CloudFront]
+        SSM[AWS Systems Manager]
+        EC2[EC2 Container Host]
+    end
+
+    GHA -->|Assume Role via OIDC| OIDC
+    GHA -->|Sync React Build| S3
+    GHA -->|Invalidate Cache| CF
+    GHA -->|Build & Push Image| GHCR
+    GHA -->|Send-Command via OIDC| SSM
+    SSM -->|Pull & Hot-Swap Container| EC2
 ```
+
+1. **Continuous Integration (`ci.yml`)**:
+   - Launches an ephemeral PostgreSQL 16 container.
+   - Applies Prisma migrations and database seeding.
+   - Executes 25 automated Supertest integration tests.
+   - Verifies TypeScript build integrity for both client and server.
+
+2. **Continuous Deployment (`cd.yml`)**:
+   - **Keyless AWS Authentication:** Authenticates securely using GitHub Actions OIDC (`aws-actions/configure-aws-credentials@v4`) — **zero permanent AWS access keys or passwords stored**.
+   - **Frontend Pipeline:** Builds the React Vite bundle, synchronizes to AWS S3 (`s3://store-sphere`), and invalidates the CloudFront distribution cache.
+   - **Backend Pipeline:** Builds and pushes multi-stage Docker images to **GitHub Container Registry** (`ghcr.io/tanmayythakare/store-sphere:latest` and commit SHA tags).
+   - **Zero-Downtime EC2 Swapping:** AWS SSM dispatches remote container updates directly to EC2, authenticated with GHCR, refreshing `store-portal-app` without restarting PostgreSQL.
 
 ---
 
@@ -126,9 +193,9 @@ npm run dev
 
 ---
 
-### Docker Deployment
+### Docker Stack
 
-Run the complete multi-container stack with a single command:
+Run the complete multi-container stack locally:
 
 ```bash
 docker compose up --build -d
@@ -169,6 +236,7 @@ npm test
 | `POST` | `/api/admin/stores` | Administrator | Create a new store |
 | `GET` | `/api/admin/users` | Administrator | List all users with role filtering |
 | `POST` | `/api/admin/users` | Administrator | Provision an administrator, owner, or user |
+| `GET` | `/api/health` | Public | Service health and heartbeat check |
 
 ---
 
