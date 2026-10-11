@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "dotenv -e .env -- tsx watch src/server.ts",
+    "dev": "dotenv -o -e .env -- tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "db:migrate": "dotenv -e .env -- prisma migrate dev",
+    "db:migrate": "dotenv -o -e .env -- prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
     "db:generate": "prisma generate",
-    "test": "dotenv -e .env -- jest --runInBand --forceExit"
+    "test": "dotenv -o -e .env -- jest --runInBand --forceExit"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

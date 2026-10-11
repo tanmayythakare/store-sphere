@@ -5,6 +5,7 @@ import { StarRating } from '../components/StarRating';
 import { SortableHeader } from '../components/SortableHeader';
 import { Modal } from '../components/Modal';
 import { EmptyState } from '../components/EmptyState';
+import { CustomDropdown } from '../components/CustomDropdown';
 import {
   Users,
   Store as StoreIcon,
@@ -14,6 +15,13 @@ import {
   Filter,
   AlertCircle,
 } from 'lucide-react';
+
+const ROLE_FILTER_OPTIONS = [
+  { value: 'ALL', label: 'All Roles' },
+  { value: 'ADMIN', label: 'Administrator' },
+  { value: 'STORE_OWNER', label: 'Store Owner' },
+  { value: 'NORMAL_USER', label: 'Normal User' },
+];
 
 export function AdminDashboard() {
   const [metrics, setMetrics] = useState<AdminMetrics>({ totalUsers: 0, totalStores: 0, totalRatings: 0 });
@@ -178,7 +186,7 @@ export function AdminDashboard() {
             className="inline-flex items-center gap-1.5 rounded-xl bg-brand-primary px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-brand-navy transition-all active:scale-98"
           >
             <Plus className="h-4 w-4" />
-            <span>Add User</span>
+            <span>Provision Account</span>
           </button>
         </div>
       </div>
@@ -337,17 +345,13 @@ export function AdminDashboard() {
             </div>
 
             <div className="flex items-center gap-2 w-full sm:w-auto">
-              <Filter className="h-4 w-4 text-neutral-400" />
-              <select
+              <Filter className="h-4 w-4 text-neutral-400 shrink-0" />
+              <CustomDropdown
                 value={userRoleFilter}
-                onChange={(e) => setUserRoleFilter(e.target.value)}
-                className="h-9 rounded-xl border border-neutral-200 bg-white px-3 text-xs text-brand-dark focus:border-brand-accent focus:outline-hidden"
-              >
-                <option value="ALL">All Roles</option>
-                <option value="ADMIN">System Administrator</option>
-                <option value="STORE_OWNER">Store Owner</option>
-                <option value="NORMAL_USER">Normal User</option>
-              </select>
+                options={ROLE_FILTER_OPTIONS}
+                onChange={setUserRoleFilter}
+                className="w-48"
+              />
             </div>
           </div>
 
@@ -432,7 +436,7 @@ export function AdminDashboard() {
       )}
 
       {/* Modal: Add New User */}
-      <Modal isOpen={isAddUserOpen} onClose={() => setIsAddUserOpen(false)} title="Register New User" description="Create an administrator, store owner, or normal user account">
+      <Modal isOpen={isAddUserOpen} onClose={() => setIsAddUserOpen(false)} title="Provision New Account" description="Create an administrator, store owner, or normal user account">
         {modalError && (
           <div className="mb-4 flex items-start gap-2 rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700">
             <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-rose-600" />

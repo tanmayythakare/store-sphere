@@ -93,7 +93,7 @@ describe('Auth & Validation API Integration Tests', () => {
   describe('Login & Session Management', () => {
     it('should successfully log in with seeded admin credentials', async () => {
       const res = await request(app).post('/api/auth/login').send({
-        email: 'admin@roxiler.com',
+        email: 'admin@storesphere.com',
         password: 'Admin@1234',
       });
 
@@ -104,7 +104,7 @@ describe('Auth & Validation API Integration Tests', () => {
 
     it('should reject invalid password with generic 401 response', async () => {
       const res = await request(app).post('/api/auth/login').send({
-        email: 'admin@roxiler.com',
+        email: 'admin@storesphere.com',
         password: 'WrongPassword@999',
       });
 
@@ -119,7 +119,7 @@ describe('Auth & Validation API Integration Tests', () => {
 
     it('should return authenticated user profile when token provided', async () => {
       const loginRes = await request(app).post('/api/auth/login').send({
-        email: 'admin@roxiler.com',
+        email: 'admin@storesphere.com',
         password: 'Admin@1234',
       });
 
@@ -128,7 +128,7 @@ describe('Auth & Validation API Integration Tests', () => {
         .set('Authorization', `Bearer ${loginRes.body.token}`);
 
       expect(res.status).toBe(200);
-      expect(res.body.user.email).toBe('admin@roxiler.com');
+      expect(res.body.user.email).toBe('admin@storesphere.com');
     });
   });
 });

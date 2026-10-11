@@ -1,4 +1,4 @@
-name: Continuous Integration & Deployment Pipeline
+name: Continuous Integration Pipeline
 
 on:
   push:
@@ -54,7 +54,7 @@ jobs:
         env:
           PORT: 5000
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/storedb?schema=public
-          JWT_SECRET: ci-testing-jwt-secret-key-roxiler-2026
+          JWT_SECRET: ci-testing-jwt-secret-key-storesphere-2026
         run: |
           cd server
           npm test
@@ -65,45 +65,3 @@ jobs:
           npm install
           npm run build
 
-  docker-publish:
-    name: Build & Push Docker Image to GHCR
-    needs: test-and-build
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: actions/setup-buildx-action@v3
-
-      - name: Log in to GitHub Container Registry (GHCR)
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata for Docker tags
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}
-          tags: |
-            type=raw,value=latest
-            type=sha,format=short
-
-      - name: Build and push production container
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max

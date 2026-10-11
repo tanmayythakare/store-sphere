@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { Role } from '@prisma/client';
 import { AuthenticatedRequest, JwtPayload } from '../types';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-jwt-key-roxiler-2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-jwt-key-storesphere-2026';
 
 export function authenticateToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const authHeader = req.headers['authorization'];

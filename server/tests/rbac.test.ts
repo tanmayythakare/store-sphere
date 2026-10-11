@@ -10,7 +10,7 @@ describe('Role-Based Access Control (RBAC) Integration Tests', () => {
   beforeAll(async () => {
     // 1. Get Admin Token
     const adminRes = await request(app).post('/api/auth/login').send({
-      email: 'admin@roxiler.com',
+      email: 'admin@storesphere.com',
       password: 'Admin@1234',
     });
     adminToken = adminRes.body.token;

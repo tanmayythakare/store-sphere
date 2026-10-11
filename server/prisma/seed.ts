@@ -35,7 +35,7 @@ async function main() {
   const admin = await prisma.user.create({
     data: {
       name: 'Alexander Montgomery Pierce', // 28 chars
-      email: 'admin@roxiler.com',
+      email: 'admin@storesphere.com',
       password: adminPassword,
       address: '704 Yashada Business Zone, Baner, Pune',
       role: Role.ADMIN,

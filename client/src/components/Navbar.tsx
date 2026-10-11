@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Store, Settings, LogOut, LayoutDashboard, ShoppingBag, User } from 'lucide-react';
+import { BrandLogo } from './BrandLogo';
 
 export function Navbar() {
   const { user, logout } = useAuth();
@@ -13,12 +14,10 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-navy text-brand-accent shadow-xs transition-transform group-hover:scale-105">
-            <Store className="h-5 w-5" />
-          </div>
+          <BrandLogo size="sm" />
           <div className="flex flex-col">
-            <span className="text-base font-bold tracking-tight text-brand-dark">Roxiler Portal</span>
-            <span className="text-[10px] font-medium text-neutral-400 uppercase tracking-widest">Store Directory</span>
+            <span className="text-base font-bold tracking-tight text-brand-dark">StoreSphere</span>
+            <span className="text-[10px] font-medium text-neutral-400 uppercase tracking-widest">Commercial Store Network</span>
           </div>
         </Link>
 

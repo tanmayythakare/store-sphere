@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Store, Lock, Mail, AlertCircle, ArrowRight, ShieldCheck, UserCheck } from 'lucide-react';
+import { Lock, Mail, AlertCircle, ArrowRight } from 'lucide-react';
+import { BrandLogo } from '../components/BrandLogo';
 
 export function Login() {
   const { login, getHomeRouteForRole } = useAuth();
@@ -27,12 +28,6 @@ export function Login() {
     }
   };
 
-  const handleQuickFill = (demoEmail: string, demoPass: string) => {
-    setEmail(demoEmail);
-    setPassword(demoPass);
-    setError(null);
-  };
-
   return (
     <div className="flex min-h-[calc(100vh-6rem)] items-center justify-center py-10 px-4">
       <div className="w-full max-w-md space-y-6">
@@ -40,10 +35,10 @@ export function Login() {
         <div className="rounded-2xl border border-neutral-200/80 bg-white p-8 shadow-sm">
           {/* Header */}
           <div className="text-center mb-6">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-brand-navy text-brand-accent shadow-xs mb-3">
-              <Store className="h-6 w-6" />
+            <div className="flex justify-center mb-4">
+              <BrandLogo size="lg" />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-brand-dark">Sign In</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-brand-dark">Sign In to StoreSphere</h1>
             <p className="mt-1 text-xs text-neutral-500">
               Access your store catalog, reviews, or administration console
             </p>
@@ -108,39 +103,6 @@ export function Login() {
               )}
             </button>
           </form>
-
-          {/* Quick Demo Credentials */}
-          <div className="mt-6 pt-5 border-t border-neutral-100">
-            <span className="block text-[11px] font-semibold uppercase tracking-wider text-neutral-400 text-center mb-3">
-              Quick Test Credentials
-            </span>
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() => handleQuickFill('admin@roxiler.com', 'Admin@1234')}
-                className="flex flex-col items-center justify-center gap-1 rounded-lg border border-neutral-200 bg-neutral-50/80 p-2 text-[11px] font-medium text-neutral-700 hover:border-brand-accent hover:bg-white transition-all"
-              >
-                <ShieldCheck className="h-3.5 w-3.5 text-brand-primary" />
-                <span>Admin</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickFill('owner1@store.com', 'Owner@1234')}
-                className="flex flex-col items-center justify-center gap-1 rounded-lg border border-neutral-200 bg-neutral-50/80 p-2 text-[11px] font-medium text-neutral-700 hover:border-brand-accent hover:bg-white transition-all"
-              >
-                <Store className="h-3.5 w-3.5 text-brand-primary" />
-                <span>Owner</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickFill('user@example.com', 'User@1234')}
-                className="flex flex-col items-center justify-center gap-1 rounded-lg border border-neutral-200 bg-neutral-50/80 p-2 text-[11px] font-medium text-neutral-700 hover:border-brand-accent hover:bg-white transition-all"
-              >
-                <UserCheck className="h-3.5 w-3.5 text-brand-primary" />
-                <span>User</span>
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Footer Link */}
