@@ -74,28 +74,11 @@ Register / Sign In  →  Role-Based Routing  →  Store Catalog & Search  →  1
 StoreSphere employs a secure hybrid cloud architecture deployed on AWS with unified HTTPS delivery via CloudFront:
 
 ```mermaid
-flowchart TD
-    User([End User / Browser])
-
-    subgraph CDN["AWS CloudFront Global CDN (d115c1ev3w1apg.cloudfront.net)"]
-        CF[CloudFront Distribution]
-    end
-
-    subgraph Frontend["Static Hosting"]
-        S3[(AWS S3 Bucket: store-sphere<br/>React 18 SPA Build)]
-    end
-
-    subgraph Backend["AWS EC2 Host (Ubuntu 24.04 LTS)"]
-        subgraph DockerNet["Docker Compose Internal Bridge Network"]
-            App["StoreSphere API Container<br/>Express 5 + Prisma ORM<br/>Port 5000"]
-            DB[("PostgreSQL 16 Alpine<br/>Port 5432 - Private Network")]
-        end
-    end
-
-    User -->|HTTPS| CF
-    CF -->|Route: /*| S3
-    CF -->|Route: /api/*| App
-    App -->|Prisma Client| DB
+flowchart LR
+    User([Browser / Client]) -->|HTTPS| CF[AWS CloudFront CDN]
+    CF -->|Route: /*| S3[(AWS S3: React 18 SPA)]
+    CF -->|Route: /api/*| App[AWS EC2: Express 5 API]
+    App -->|Prisma ORM| DB[(PostgreSQL 16: Private Net)]
 ```
 
 * **Zero Mixed Content & Zero CORS Issues:** CloudFront routes both static frontend assets (`/*`) and API requests (`/api/*`) through a single domain under unified TLS/SSL.

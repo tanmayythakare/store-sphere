@@ -25,7 +25,7 @@ function HomeRedirect() {
     return <Navigate to={getHomeRouteForRole(user.role)} replace />;
   }
 
-  return <Navigate to="/stores" replace />;
+  return <Navigate to="/login" replace />;
 }
 
 export function AppContent() {
