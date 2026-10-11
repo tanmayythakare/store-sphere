@@ -28,8 +28,15 @@ app.use('/api/stores', storeRoutes);
 app.use('/api/admin', adminRoutes);
 
 // Production Static Serving
-const clientDistPath = path.join(__dirname, '../public');
-if (fs.existsSync(clientDistPath)) {
+const candidatePaths = [
+  path.resolve(process.cwd(), 'public'),
+  path.resolve(__dirname, '../../public'),
+  path.resolve(__dirname, '../public'),
+  path.resolve(__dirname, '../../../client/dist'),
+];
+const clientDistPath = candidatePaths.find((p) => fs.existsSync(p));
+
+if (clientDistPath) {
   app.use(express.static(clientDistPath));
   app.get('*', (req: Request, res: Response, next: NextFunction) => {
     if (req.path.startsWith('/api')) {

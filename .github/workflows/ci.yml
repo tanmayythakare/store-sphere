@@ -48,7 +48,15 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/storedb?schema=public
         run: |
           cd server
+          npx prisma generate
           npx prisma migrate deploy
+
+      - name: Seed Test Database
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/storedb?schema=public
+        run: |
+          cd server
+          npm run db:seed
 
       - name: Execute Automated Supertest Integration Tests
         env:

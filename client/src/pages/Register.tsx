@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { User, Lock, Mail, MapPin, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react';
+import { BrandLogo } from '../components/BrandLogo';
 
 export function Register() {
   const { register } = useAuth();
@@ -63,6 +64,9 @@ export function Register() {
       <div className="w-full max-w-lg space-y-6">
         <div className="rounded-2xl border border-neutral-200/80 bg-white p-8 shadow-sm">
           <div className="text-center mb-6">
+            <div className="flex justify-center mb-4">
+              <BrandLogo size="lg" />
+            </div>
             <h1 className="text-2xl font-bold tracking-tight text-brand-dark">Create Account</h1>
             <p className="mt-1 text-xs text-neutral-500">
               Sign up as a normal user to explore and rate local stores

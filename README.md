@@ -65,14 +65,14 @@ Register / Sign In  →  Role-Based Routing  →  Store Catalog & Search  →  1
 
 ```mermaid
 flowchart LR
-    Client["React 18 SPA<br/>(Tailwind CSS :5173)"]
-    Server["Express REST API<br/>(TypeScript :5000)"]
-    Prisma["Prisma ORM 6.4<br/>(Validation & RBAC)"]
-    DB[("PostgreSQL 16<br/>(:5432)")]
+    Client["React 18 SPA<br/>Tailwind CSS :3000"]
+    Server["Express REST API<br/>TypeScript :5000"]
+    Prisma["Prisma ORM 6.4<br/>Validation & RBAC"]
+    DB[("PostgreSQL 16 Database<br/>Port 5432")]
 
-    Client -->|"HTTP / JWT Bearer"| Server
+    Client -->|HTTP / JWT Bearer| Server
     Server --> Prisma
-    Prisma -->|"Composite Key Upsert"| DB
+    Prisma -->|Composite Key Upsert| DB
 ```
 
 ---
@@ -122,7 +122,7 @@ npm run dev
 ```
 
 * Backend API: `http://localhost:5000`
-* Frontend App: `http://localhost:5173`
+* Frontend App: `http://localhost:3000`
 
 ---
 
@@ -160,7 +160,7 @@ npm test
 | `POST` | `/api/auth/register` | Public | Register a new normal user account |
 | `POST` | `/api/auth/login` | Public | Authenticate and obtain JWT token |
 | `GET` | `/api/auth/me` | Authenticated | Fetch authenticated user profile |
-| `PUT` | `/api/auth/password` | Authenticated | Change user account password |
+| `POST` | `/api/auth/change-password` | Authenticated | Change user account password |
 | `GET` | `/api/stores` | Authenticated | Search, sort, and list all stores |
 | `POST` | `/api/stores/:id/ratings` | Normal User | Submit or update 1–5 star rating |
 | `GET` | `/api/stores/owner/my-store` | Store Owner | View assigned store and customer reviews |
