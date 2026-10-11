@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/tanmayythakare/store-sphere/actions/workflows/ci.yml"><img src="https://github.com/tanmayythakare/store-sphere/actions/workflows/ci.yml/badge.svg" alt="CI Status"></a>
   <a href="https://github.com/tanmayythakare/store-sphere/actions/workflows/cd.yml"><img src="https://github.com/tanmayythakare/store-sphere/actions/workflows/cd.yml/badge.svg" alt="CD Status"></a>
-  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.4-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript 5.4"></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript 5.7"></a>
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-18.3-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React 18.3"></a>
   <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-20.x-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node.js 20"></a>
   <a href="https://expressjs.com/"><img src="https://img.shields.io/badge/Express-5.3-000000?style=flat-square&logo=express&logoColor=white" alt="Express 5.3"></a>
@@ -24,8 +24,8 @@
 </p>
 
 <p align="center">
-  🌐 <strong>Live Production Domain:</strong> <a href="https://storesphere.tanmayythakare.online"><strong>https://storesphere.tanmayythakare.online</strong></a><br>
-  🩺 <strong>API Health Endpoint:</strong> <a href="https://storesphere.tanmayythakare.online/api/health"><code>https://storesphere.tanmayythakare.online/api/health</code></a>
+  <strong>Live Production Domain:</strong> <a href="https://storesphere.tanmayythakare.online"><strong>https://storesphere.tanmayythakare.online</strong></a><br>
+  <strong>API Health Endpoint:</strong> <a href="https://storesphere.tanmayythakare.online/api/health"><code>https://storesphere.tanmayythakare.online/api/health</code></a>
 </p>
 
 <p align="center">
@@ -226,3 +226,12 @@ npm test
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+---
+
+<div align="center">
+  <a href="https://github.com/tanmayythakare">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=16&pause=2000&color=38BDF8&center=true&vCenter=true&width=360&lines=Built+by+Tanmay+Thakare+%F0%9F%90%B1" alt="Built by Tanmay Thakare 🐱" />
+  </a>
+</div>
+
